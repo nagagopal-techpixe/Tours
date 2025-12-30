@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { ChevronDown, ChevronUp, CheckCircle } from "lucide-react";
 const PackageDetailPage = ({ tour, navigateTo }) => {
+
   const [activeDay, setActiveDay] = useState(null);
 
   if (!tour) return <div className="pt-32 text-center">Loading...</div>;
@@ -83,3 +86,5 @@ const PackageDetailPage = ({ tour, navigateTo }) => {
     </div>
   );
 };
+
+export default PackageDetailPage;

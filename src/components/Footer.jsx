@@ -44,7 +44,7 @@ const Footer = ({ navigateTo }) => (
             <li className="hover:text-white cursor-pointer transition">Privacy Policy</li>
             <li className="hover:text-white cursor-pointer transition">Terms & Conditions</li>
             <li className="hover:text-white cursor-pointer transition">Payment Security</li>
-            <li onClick={() => navigateTo('admin')} className="hover:text-gray-600 cursor-pointer transition">Admin Panel</li>
+            <li className="hover:text-gray-600 cursor-pointer transition">Admin Panel</li>
           </ul>
         </div>
 
