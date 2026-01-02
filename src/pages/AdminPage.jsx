@@ -106,7 +106,14 @@ const handleLogout = () => {
                 ) : (
                   leads.map((lead) => (
                     <tr key={lead.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4">{lead.date}</td>
+                      <td className="px-6 py-4">
+  {new Date(lead.date).toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })}
+</td>
+
                       <td className="px-6 py-4 font-bold text-blue-900">
                         {lead.name}
                       </td>

@@ -12,9 +12,10 @@ const PackagesPage = ({ navigateTo }) => {
 
   return (
     <div className="pt-24 min-h-screen bg-gray-50">
-      <div className="bg-blue-950 text-white py-16 text-center">
+      <div className="bg-gradient-to-br from-blue-950 via-amber-600 to-yellow-500 text-white py-16 text-center">
+        {/* bg-gradient-to-br from-blue-950 via-amber-800 to-orange-800 */}
         <h1 className="text-4xl font-bold mb-4">Our Tour Collections</h1>
-        <p className="text-blue-200 max-w-2xl mx-auto font-sans">
+        <p className="max-w-2xl mx-auto font-sans">
           From the snowy peaks of the Himalayas to the backwaters of Kerala, find your perfect Indian journey.
         </p>
       </div>

@@ -2,11 +2,34 @@
 import React from 'react';
 import  useTours   from '../data/tours.js'; // if you put mock data in a separate file
 import { TESTIMONIALS } from '../data/testimonials.js'; // if you put mock data in a separate file
-
+import backgroundImage from "../assets/background.jpeg"; // example background image
+import bg from "../assets/bg.jpg"; // example background image
+import bg1 from "../assets/bg1.jpeg"; // example background image
+import bg2 from "../assets/bg2.jpeg"; // example background image
+import bg3 from "../assets/bg3.jpeg"; // example background image
+import { useEffect, useState } from "react";
 import { ArrowRight, CheckCircle, Star } from 'lucide-react';
-
+import GallerySection from './gallery.jsx';
 const HomePage = ({ navigateTo }) => {
      const { TOURS, loading, error } = useTours();
+
+
+const images = [bg2, bg3, bg1];
+
+const [currentSlide, setCurrentSlide] = useState(0);
+
+
+useEffect(() => {
+  // ⏳ 7s for first slide, 4s for others
+  const delay = currentSlide === 0 ? 5000 : 4000;
+
+  const timer = setTimeout(() => {
+    setCurrentSlide(prev => (prev + 1) % images.length);
+  }, delay);
+
+  return () => clearTimeout(timer);
+}, [currentSlide, images.length]);
+
   
     if (loading) return <p>Loading tours...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -16,19 +39,40 @@ const HomePage = ({ navigateTo }) => {
     {/* Hero Section */}
     <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       {/* Background Image Overlay */}
-      <div className="absolute inset-0 bg-blue-950">
-        <img 
-          src="https://images.unsplash.com/photo-1598324789736-4861f89564a0?auto=format&fit=crop&q=80&w=1920" 
-          alt="Taj Mahal India" 
-          className="w-full h-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-transparent to-blue-950/50"></div>
-      </div>
+      <div className="absolute inset-0 overflow-hidden">
+  {images.map((img, index) => (
+    <img
+      key={index}
+      src={img}
+      alt="Hero Slide"
+      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000
+        ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
+    />
+  ))}
+
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-gold-950/60"></div>
+
+  {/* Gradient */}
+  <div className="absolute inset-0 bg-gradient-to-t from-gold-950 via-transparent to-gold-950/50"></div>
+</div>
+
 
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-        <div className="inline-block border border-amber-500/50 text-amber-400 px-4 py-1 rounded-full text-xs font-sans tracking-[0.2em] mb-6 animate-fade-in-up">
-          LUXURY TOURS INDIA
-        </div>
+<div
+  className="
+    inline-block border border-amber-400/60 text-amber-300
+    px-5 py-2 rounded-full font-semibold backdrop-blur-sm shadow-lg mb-6
+    text-xs sm:text-sm
+    tracking-[0.15em] sm:tracking-[0.25em]
+    ml-10 sm:ml-0
+  "
+>
+  LUXURY TOURS INDIA
+</div>
+
+
+
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 drop-shadow-lg leading-tight animate-fade-in-up delay-100">
           Discover India the Way <br/>
           <span className="text-amber-500 italic font-light">It’s Meant to Be Experienced</span>
@@ -52,6 +96,7 @@ const HomePage = ({ navigateTo }) => {
         </div>
       </div>
     </div>
+
 
     {/* Featured Packages */}
     <div className="py-24 bg-white">
@@ -92,9 +137,10 @@ const HomePage = ({ navigateTo }) => {
         </div>
       </div>
     </div>
+<GallerySection navigateTo={navigateTo} />
 
     {/* Why Choose Us */}
-    <div className="py-24 bg-gray-50">
+    <div className="py-24 bg-gray-50 -mt-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div>
@@ -134,29 +180,80 @@ const HomePage = ({ navigateTo }) => {
     </div>
 
     {/* Testimonials */}
-    <div className="py-24 bg-blue-950 text-white relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-           <h2 className="text-4xl font-bold mb-4">Guest Stories</h2>
-           <p className="text-blue-200 font-sans">Trusted by travelers from over 50 countries.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((t, i) => (
-            <div key={i} className="bg-blue-900/50 p-8 rounded-xl border border-blue-800 backdrop-blur-sm">
-              <div className="flex gap-1 text-amber-500 mb-4">
-                {[...Array(t.rating)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-              </div>
-              <p className="italic text-gray-300 mb-6 font-serif text-lg leading-relaxed">"{t.text}"</p>
-              <div>
-                <h4 className="font-bold">{t.name}</h4>
-                <span className="text-xs text-amber-500 font-sans uppercase tracking-wider">{t.country}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+   <div className="py-24 bg-gradient-to-br from-blue-950 via-amber-800 to-orange-800 text-white relative overflow-hidden">
+
+  {/* Texture overlay */}
+  <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+
+  {/* Soft glow accents */}
+  <div className="absolute inset-0 pointer-events-none">
+    <div className="absolute -top-10 -left-10 w-64 h-64 bg-blue-500/20 blur-3xl rounded-full"></div>
+    <div className="absolute top-1/3 right-10 w-72 h-72 bg-amber-400/20 blur-3xl rounded-full"></div>
+    <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-orange-500/20 blur-3xl rounded-full"></div>
+  </div>
+
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-bold mb-4">Guest Stories</h2>
+      <p className="text-blue-100 font-sans">
+        Trusted by travelers from over 50 countries.
+      </p>
     </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {TESTIMONIALS.map((t, i) => {
+
+        // color theme per card (blue / golden / orange)
+       const COLORS = [
+  // Premium Royal Blue
+ {
+  card: "from-cyan-900 via-teal-800 to-cyan-700 border-teal-400 shadow-teal-400/20",
+  text: "text-cyan-50"
+},
+  // Metallic Golden
+   {
+            card: "from-amber-700 to-yellow-600 border-amber-500",
+            text: "text-amber-200"
+          },  
+
+  // Rich Orange
+  {
+    card: "from-orange-700 via-orange-600 to-amber-500 border-orange-300 shadow-orange-300/20",
+    text: "text-orange-50"
+  }
+];
+
+
+        const theme = COLORS[i % COLORS.length];
+
+        return (
+          <div
+            key={i}
+            className={`bg-gradient-to-br ${theme.card} p-8 rounded-xl border backdrop-blur-sm shadow-lg`}
+          >
+            <div className="flex gap-1 text-amber-400 mb-4">
+              {[...Array(t.rating)].map((_, s) => (
+                <Star key={s} size={16} fill="currentColor" />
+              ))}
+            </div>
+
+            <p className={`italic ${theme.text} mb-6 font-serif text-lg leading-relaxed`}>
+              "{t.text}"
+            </p>
+
+            <div>
+              <h4 className="font-bold">{t.name}</h4>
+              <span className="text-xs text-amber-300 font-sans uppercase tracking-wider">
+                {t.country}
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
   </div>
 );
 }

@@ -13,32 +13,38 @@ const ContactPage = () => (
             <div className="bg-amber-100 p-3 rounded-full text-amber-600"><MapPin size={24} /></div>
             <div>
               <h4 className="font-bold">Head Office</h4>
-              <p className="text-gray-600 font-sans text-sm">Level 4, Heritage Tower, <br/>Connaught Place, New Delhi, 110001</p>
+              <p className="text-gray-600 font-sans text-sm">Pno C17 Paschim Vihar Kesopura, <br/>A Block Ajmer road Jaipur</p>
             </div>
          </div>
          <div className="flex items-start gap-4">
             <div className="bg-amber-100 p-3 rounded-full text-amber-600"><Phone size={24} /></div>
             <div>
               <h4 className="font-bold">Phone</h4>
-              <p className="text-gray-600 font-sans text-sm">+91 98765 43210 (24/7 Support)</p>
+              <p className="text-gray-600 font-sans text-sm">+91 90014 59519 (24/7 Support)</p>
             </div>
          </div>
          <div className="flex items-start gap-4">
             <div className="bg-amber-100 p-3 rounded-full text-amber-600"><Mail size={24} /></div>
             <div>
               <h4 className="font-bold">Email</h4>
-              <p className="text-gray-600 font-sans text-sm">hello@kirtitours.com</p>
+              <p className="text-gray-600 font-sans text-sm"> kirtiindianexcrusiontours@gmail.com</p>
             </div>
          </div>
       </div>
       
       {/* Map Placeholder */}
-      <div className="bg-gray-200 rounded-xl overflow-hidden h-80 relative flex items-center justify-center">
-        <div className="text-gray-500 font-bold flex flex-col items-center">
-          <MapPin size={40} className="mb-2" />
-          <span>Google Map Integration</span>
-        </div>
-      </div>
+      <div className="rounded-xl overflow-hidden h-80">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3558.5124006990777!2d75.72441797401775!3d26.887228661187844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sPno%20C17%20Paschim%20Vihar%20Kesopura%2C%20A%20Block%20Ajmer%20road%20Jaipur!5e0!3m2!1sen!2sus!4v1767349253881!5m2!1sen!2sus"  
+    width="100%"
+    height="100%"
+    style={{ border: 0 }}
+    allowFullScreen=""
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+  ></iframe>
+</div>
+
     </div>
   </div>
 );

@@ -11,7 +11,7 @@ import WhatsAppButton from "./components/WhatsAppButton.jsx"
 import AdminPage from "./pages/AdminPage.jsx";
 import useEnquiries from "./data/useEnquiries.js";
 import PackageDetailPage from './pages/PackageDetailPage.jsx';
-
+import GalleryShowAll from './pages/showAll.jsx';
 // --- Mock Data ---
 
 const App = () => {
@@ -88,6 +88,7 @@ if (
     ? <AdminPage leads={leads} tours={TOURS} /> 
     : <AdminLogin onLogin={() => setIsLoggedIn(true)} />;
 }
+
   // Header Logic (Transparent on Home Top, Solid elsewhere)
   const isTransparentHeader = activePage === 'home' && !scrolled;
   const headerClass = isTransparentHeader
@@ -109,7 +110,8 @@ if (
         {activePage === 'about' && <AboutPage />}
         {activePage === 'packages' && <PackagesPage navigateTo={navigateTo} />}
         {activePage === 'package-detail' && <PackageDetailPage tour={selectedTour} navigateTo={navigateTo} />}
-       
+       {activePage === "gallery" && <GalleryShowAll />}
+
   {activePage === 'custom-tour' && (
         <CustomTourPage
           formData={formData}

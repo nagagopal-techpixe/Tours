@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, Trash } from "lucide-react";
-
+import { useEffect } from "react";
 const UploadTourModal = ({ isOpen, onClose, onSubmit }) => {
   const [tour, setTour] = useState({
     title: "",
@@ -14,6 +14,13 @@ const UploadTourModal = ({ isOpen, onClose, onSubmit }) => {
   });
 
   const [imagePreview, setImagePreview] = useState("");
+    useEffect(() => {
+    const days = Number(tour.daysNum) || 1;
+    setTour(prev => ({
+      ...prev,
+      itinerary: Array.from({ length: days }, (_, i) => prev.itinerary[i] || { day: i + 1, title: "", desc: "" })
+    }));
+  }, [tour.daysNum]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];

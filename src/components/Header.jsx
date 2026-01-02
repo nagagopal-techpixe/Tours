@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
 // 👉 Import both logos
-import logoDark from "../assets/logoresize.png";
-import  logoWhite from "../assets/logoresize1.png";
+// import logoDark from "../assets/logoresize.png";
+import  logoDark from "../assets/logoresize3.png";
+
+import  logoWhite from "../assets/logoresize3.png";
 
 const Header = ({ activePage, setActivePage, navigateTo }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,7 +42,7 @@ const Header = ({ activePage, setActivePage, navigateTo }) => {
             className="flex items-center cursor-pointer"
             onClick={() => navigateTo('home')}
           >
-            <div className="w-40 h-24 flex items-center justify-center">
+            <div className="w-40 h-24 flex items-center justify-center -ml-10">
               <img
                 src={isTransparentHeader ? logoWhite : logoDark}
                 alt="Logo"

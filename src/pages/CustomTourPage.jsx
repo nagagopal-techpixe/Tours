@@ -4,22 +4,39 @@ const CustomTourPage = ({ formData, setFormData, status, onSubmit }) => (
   <div className="pt-24 min-h-screen bg-gray-50 flex items-center justify-center py-12">
     <div className="bg-white max-w-4xl w-full rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
       {/* Left: Image/Info */}
-      <div className="md:w-1/3 bg-blue-950 p-12 text-white flex flex-col justify-between relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
-        <div className="relative z-10">
-          <h2 className="text-3xl font-bold mb-6">Plan Your Dream Trip</h2>
-          <p className="text-blue-200 font-sans mb-8">
-            Tell us your preferences and our travel experts will craft a personalized itinerary just for you within 24 hours.
-          </p>
-          <div className="flex items-center gap-3 text-amber-500 font-bold font-sans text-sm uppercase tracking-wider">
-            <ShieldCheck size={20} /> Zero Spam Policy
-          </div>
-        </div>
-        <div className="relative z-10 mt-12">
-           <div className="text-xs text-blue-400 uppercase tracking-widest mb-2">Need help?</div>
-           <div className="text-2xl font-bold">+91 98765 43210</div>
-        </div>
-      </div>
+   <div className="md:w-1/3 bg-gradient-to-br from-blue-950 via-amber-600 to-yellow-500 p-12 text-white flex flex-col justify-between relative overflow-hidden">
+  
+  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+
+  <div className="relative z-10">
+
+    <h2 className="text-3xl font-bold mb-6">
+      Plan Your Dream Trip
+    </h2>
+
+    <p className="text-white/90 font-sans mb-8">
+      Tell us your preferences and our travel experts will craft a personalized itinerary just for you within 24 hours.
+    </p>
+
+    <div className="flex items-center gap-3 text-white font-bold font-sans text-sm uppercase tracking-wider">
+      <ShieldCheck size={20} />
+      Zero Spam Policy
+    </div>
+  </div>
+
+  <div className="relative z-10 mt-12">
+
+    <div className="text-white/80 uppercase tracking-widest mb-2 text-xs">
+      Need help?
+    </div>
+
+    <div className="text-2xl font-bold text-white">
+      +91 90014 59519
+    </div>
+
+  </div>
+</div>
+
 
       {/* Right: Form */}
       <div className="md:w-2/3 p-12">
