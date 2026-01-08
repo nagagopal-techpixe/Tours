@@ -112,7 +112,7 @@ if (
         {activePage === 'package-detail' && <PackageDetailPage tour={selectedTour} navigateTo={navigateTo} />}
        {activePage === "gallery" && <GalleryShowAll />}
 
-  {activePage === 'custom-tour' && (
+  {activePage === 'plan-your-own-tour' && (
         <CustomTourPage
           formData={formData}
           setFormData={setFormData}

@@ -30,7 +30,7 @@ const Header = ({ activePage, setActivePage, navigateTo }) => {
 
   const mobileBtnClass = isTransparentHeader ? 'text-white' : 'text-blue-950';
 
-  const menuItems = ['Home', 'About', 'Packages', 'Custom Tour', 'Contact'];
+  const menuItems = ['Home', 'About', 'Packages', 'Plan-your-own-tour', 'Contact'];
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${headerClass}`}>
@@ -69,7 +69,7 @@ const Header = ({ activePage, setActivePage, navigateTo }) => {
             })}
 
             <button
-              onClick={() => navigateTo('custom-tour')}
+              onClick={() => navigateTo('plan-your-own-tour')}
               className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2.5 rounded-sm font-bold uppercase text-xs tracking-widest shadow-lg transition-all transform hover:-translate-y-0.5"
             >
               Plan My Trip

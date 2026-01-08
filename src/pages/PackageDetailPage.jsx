@@ -15,7 +15,7 @@ const PackageDetailPage = ({ tour, navigateTo }) => {
           <div>
              <span className="text-amber-400 font-sans font-bold tracking-[0.2em] uppercase text-sm mb-2 block">{tour.duration}</span>
              <h1 className="text-5xl font-bold text-white mb-6 max-w-4xl">{tour.title}</h1>
-             <button onClick={() => navigateTo('custom-tour')} className="bg-amber-500 text-white px-8 py-3 rounded-sm font-bold uppercase font-sans hover:bg-amber-600 transition">
+             <button onClick={() => navigateTo('plan-your-own-tour')} className="bg-amber-500 text-white px-8 py-3 rounded-sm font-bold uppercase font-sans hover:bg-amber-600 transition">
                Book This Tour
              </button>
           </div>
@@ -74,7 +74,7 @@ const PackageDetailPage = ({ tour, navigateTo }) => {
             </ul>
 
             <button 
-              onClick={() => navigateTo('custom-tour')} 
+              onClick={() => navigateTo('plan-your-own-tour')} 
               className="w-full bg-blue-950 text-white py-4 rounded-sm font-bold uppercase tracking-wider hover:bg-blue-900 transition mb-4"
             >
               Enquire Now

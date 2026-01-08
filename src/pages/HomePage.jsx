@@ -10,6 +10,8 @@ import bg3 from "../assets/bg3.jpeg"; // example background image
 import { useEffect, useState } from "react";
 import { ArrowRight, CheckCircle, Star } from 'lucide-react';
 import GallerySection from './gallery.jsx';
+import ProfileAvatar from './ProfileImage.jsx';
+
 const HomePage = ({ navigateTo }) => {
      const { TOURS, loading, error } = useTours();
 
@@ -82,7 +84,7 @@ useEffect(() => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-300">
           <button 
-            onClick={() => navigateTo('custom-tour')}
+            onClick={() => navigateTo('plan-your-own-tour')}
             className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-sm font-sans font-bold uppercase tracking-wider transition-colors shadow-lg"
           >
             Plan My Trip
@@ -178,7 +180,7 @@ useEffect(() => {
         </div>
       </div>
     </div>
-
+<ProfileAvatar />
     {/* Testimonials */}
    <div className="py-24 bg-gradient-to-br from-blue-950 via-amber-800 to-orange-800 text-white relative overflow-hidden">
 
