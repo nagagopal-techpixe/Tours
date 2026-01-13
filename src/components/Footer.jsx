@@ -40,7 +40,16 @@ const Footer = ({ navigateTo }) => {
 
             <div className="flex space-x-4 mb-5">
               <Facebook size={20} className="text-gray-300 hover:text-amber-400 cursor-pointer" />
-              <Instagram size={20} className="text-gray-300 hover:text-amber-400 cursor-pointer" />
+              <a
+      href="https://www.instagram.com/kirtiindianexcursiontours?igsh=czJzczVmdmU2dGk4&utm_source=qr"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Instagram
+        size={20}
+        className="text-gray-300 hover:text-amber-400 cursor-pointer"
+      />
+    </a>
               <Twitter size={20} className="text-gray-300 hover:text-amber-400 cursor-pointer" />
             </div>
 
@@ -87,7 +96,7 @@ const Footer = ({ navigateTo }) => {
             <ul className="space-y-4 text-sm text-gray-200">
               <li className="flex items-start gap-3">
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
-                <span>Pno C17 Paschim Vihar Kesopura A Block Ajmer road Jaipur</span>
+                <span>Pno:C17, Paschim Vihar, A Block, Ajmer road. Jaipur.</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={16} className="flex-shrink-0" />
