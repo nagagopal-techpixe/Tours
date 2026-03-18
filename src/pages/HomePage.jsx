@@ -3,20 +3,24 @@ import React from 'react';
 import  useTours   from '../data/tours.js'; // if you put mock data in a separate file
 import { TESTIMONIALS } from '../data/testimonials.js'; // if you put mock data in a separate file
 import backgroundImage from "../assets/background.jpeg"; // example background image
-import bg from "../assets/bg.jpg"; // example background image
-import bg1 from "../assets/bg1.jpeg"; // example background image
-import bg2 from "../assets/bg2.jpeg"; // example background image
-import bg3 from "../assets/bg3.jpeg"; // example background image
+
+import bg8 from "../assets/Tajcopy.jpg"
+
+import bg13 from "../assets/Gallery/t6.jpg"
+import bg14 from "../assets/Jaipurfortcopy.jpg"
+import bg15 from "../assets/Jaipurfortblue.jpg"
+import bg16 from "../assets/Bucket-List.jpg"
+// import bg4 from "../assets/bg4.jpg"
+import bg5 from "../assets/middleimage.jpg"
 import { useEffect, useState } from "react";
 import { ArrowRight, CheckCircle, Star } from 'lucide-react';
 import GallerySection from './gallery.jsx';
 import ProfileAvatar from './ProfileImage.jsx';
-
+import RajasthanHelpSection from "./HelpSection.jsx"
 const HomePage = ({ navigateTo }) => {
      const { TOURS, loading, error } = useTours();
 
-
-const images = [bg2, bg3, bg1];
+const images = [bg8,bg14,bg5,];
 
 const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -41,62 +45,74 @@ useEffect(() => {
     {/* Hero Section */}
     <div className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
       {/* Background Image Overlay */}
-      <div className="absolute inset-0 overflow-hidden">
+     <div className="absolute inset-0 overflow-hidden">
   {images.map((img, index) => (
     <img
       key={index}
       src={img}
       alt="Hero Slide"
-      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000
+      loading={index === 0 ? "eager" : "lazy"}
+      className={`absolute inset-0 w-full h-full object-cover object-center
+        transition-opacity duration-1000
         ${index === currentSlide ? "opacity-100" : "opacity-0"}`}
     />
   ))}
-
-  {/* Dark overlay */}
-  <div className="absolute inset-0 bg-gold-950/60"></div>
-
-  {/* Gradient */}
-  <div className="absolute inset-0 bg-gradient-to-t from-gold-950 via-transparent to-gold-950/50"></div>
-</div>
-
-
-      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-<div
-  className="
-    inline-block border border-amber-400/60 text-amber-300
-    px-5 py-2 rounded-full font-semibold backdrop-blur-sm shadow-lg mb-6
-    text-xs sm:text-sm
-    tracking-[0.15em] sm:tracking-[0.25em]
-    ml-10 sm:ml-0
-  "
->
-  LUXURY TOURS INDIA
 </div>
 
 
 
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 drop-shadow-lg leading-tight animate-fade-in-up delay-100">
-          Discover India the Way <br/>
-          <span className="text-amber-500 italic font-light">It’s Meant to Be Experienced</span>
-        </h1>
-        <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl mx-auto font-sans font-light animate-fade-in-up delay-200">
-          Private chauffeurs, heritage palaces, and immersive cultural experiences tailored just for you.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-300">
-          <button 
-            onClick={() => navigateTo('plan-your-own-tour')}
-            className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-sm font-sans font-bold uppercase tracking-wider transition-colors shadow-lg"
-          >
-            Plan My Trip
-          </button>
-          <button 
-            onClick={() => navigateTo('packages')}
-            className="bg-transparent border border-white text-white hover:bg-white hover:text-blue-950 px-8 py-4 rounded-sm font-sans font-bold uppercase tracking-wider transition-colors"
-          >
-            View Packages
-          </button>
-        </div>
-      </div>
+     <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+
+  <div
+    className="
+      inline-block border border-amber-400/60 text-white
+      bg-black/30
+      px-5 py-2 rounded-full font-semibold shadow-lg mb-6
+      text-xs sm:text-sm
+      tracking-[0.15em] sm:tracking-[0.25em]
+      ml-10 sm:ml-0
+    "
+  >
+    LUXURY TOURS INDIA
+  </div>
+
+  <h1 className="text-5xl md:text-7xl font-bold text-white mb-8
+    drop-shadow-[0_4px_14px_rgba(0,0,0,0.75)]
+    leading-tight animate-fade-in-up delay-100">
+    Discover India the Way <br/>
+    <span className="text-amber-500 italic font-light">
+      It’s Meant to Be Experienced
+    </span>
+  </h1>
+
+  <p className="text-lg md:text-xl text-gray-100 mb-10
+    max-w-2xl mx-auto font-sans font-light
+    animate-fade-in-up delay-200">
+    Private chauffeurs, heritage palaces, and immersive cultural experiences tailored just for you.
+  </p>
+
+  <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-300">
+    <button
+      onClick={() => navigateTo('plan-your-own-tour')}
+      className="bg-amber-500 hover:bg-amber-600 text-white
+        px-8 py-4 rounded-sm font-sans font-bold uppercase tracking-wider
+        transition-colors shadow-lg"
+    >
+      Plan My Trip
+    </button>
+
+    <button
+      onClick={() => navigateTo('packages')}
+      className="bg-transparent border border-white text-white
+        hover:bg-white hover:text-blue-950
+        px-8 py-4 rounded-sm font-sans font-bold uppercase tracking-wider
+        transition-colors"
+    >
+      View Packages
+    </button>
+  </div>
+</div>
+
     </div>
 
 
@@ -181,6 +197,8 @@ useEffect(() => {
       </div>
     </div>
 <ProfileAvatar />
+
+<RajasthanHelpSection/>
     {/* Testimonials */}
    <div className="py-24 bg-gradient-to-br from-blue-950 via-amber-800 to-orange-800 text-white relative overflow-hidden">
 

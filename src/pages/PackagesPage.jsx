@@ -56,7 +56,7 @@ const PackagesPage = ({ navigateTo }) => {
                 <h3 className="text-lg font-bold text-blue-950 mb-2 leading-tight">{tour.title}</h3>
                 <p className="text-gray-500 text-sm font-sans line-clamp-2 mb-4">{tour.description}</p>
                 <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                   <span className="text-blue-900 font-bold">{tour.price}</span>
+                   <span className="text-blue-900 font-bold">₹ {tour.price}</span>
                    <span className="text-xs text-gray-400 font-sans uppercase">Per Person</span>
                 </div>
               </div>

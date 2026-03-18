@@ -1,35 +1,73 @@
 import { useState } from "react";
 import { X, Trash } from "lucide-react";
 import { useEffect } from "react";
-const UploadTourModal = ({ isOpen, onClose, onSubmit }) => {
-  const [tour, setTour] = useState({
-    title: "",
-    days: "",
-    price: "",
-    destination: "",
-    packageType: "",
-    image: "",
-    overview: "",
-    itinerary: [{ day: 1, title: "", desc: "" }]
-  });
+const UploadTourModal = ({ isOpen, onClose, onSubmit, editTour }) => {
+ const [tour, setTour] = useState({
+  title: "",
+  daysNum: "",      // ✅ correct
+  nightsNum: "",    // ✅ correct
+  price: "",
+  destination: "",
+  packageType: "",
+  image: "",
+  overview: "",
+  itinerary: [{ day: 1, title: "", desc: "" }]
+});
 
   const [imagePreview, setImagePreview] = useState("");
-    useEffect(() => {
-    const days = Number(tour.daysNum) || 1;
-    setTour(prev => ({
-      ...prev,
-      itinerary: Array.from({ length: days }, (_, i) => prev.itinerary[i] || { day: i + 1, title: "", desc: "" })
-    }));
-  }, [tour.daysNum]);
+   useEffect(() => {
+  if (!tour.daysNum) return;
+
+  const days = Number(tour.daysNum);
+
+  setTour(prev => ({
+    ...prev,
+    itinerary: Array.from({ length: days }, (_, i) => ({
+      day: i + 1,
+      title: prev.itinerary[i]?.title || "",
+      desc: prev.itinerary[i]?.desc || ""
+    }))
+  }));
+}, [tour.daysNum]);
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const file = e.target.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = () => setImagePreview(reader.result);
-    reader.readAsDataURL(file);
+  const reader = new FileReader();
+  reader.onload = () => {
+    setImagePreview(reader.result);
+    setTour(prev => ({ ...prev, image: reader.result })); // ← add this line
   };
+  reader.readAsDataURL(file);
+};
+useEffect(() => {
+  if (editTour) {
+    const duration = editTour.duration || "";
+    const match = duration.match(/(\d+)\s*Days\s*\/\s*(\d+)\s*Nights/);
+
+    setTour({
+      title: editTour.title || "",
+      daysNum: match ? match[1] : "",
+      nightsNum: match ? match[2] : "",
+   price: editTour.price || "",
+      destination: editTour.region || "",
+      packageType: editTour.theme || "",
+      image: editTour.image || "",
+      overview: editTour.description || "",
+      itinerary:
+        editTour.itinerary || [{ day: 1, title: "", desc: "" }]
+    });
+
+    setImagePreview(editTour.image || "");
+  }
+}, [editTour]);
+useEffect(() => {
+  if (editTour) {
+    console.log("Price value:", editTour.price);
+    console.log("Price type:", typeof editTour.price);
+  }
+}, [editTour]);
 
   const addDay = () => {
     setTour({
@@ -55,30 +93,37 @@ const UploadTourModal = ({ isOpen, onClose, onSubmit }) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+  const payload = {
+    title: tour.title,
+    duration: `${tour.daysNum} Days / ${tour.nightsNum} Nights`,
+    price: tour.price,
+    region: tour.destination,
+    theme: tour.packageType,
+    image: tour.image || imagePreview,
+    description: tour.overview,
+    itinerary: tour.itinerary,
+  };
+
   try {
-    const res = await fetch("https://kirti.bteam11.com/api/tours/", {
-      method: "POST",
+    const url = editTour
+      ? `https://kirti.bteam11.com/api/tours/${editTour._id}`
+      : "https://kirti.bteam11.com/api/tours/";
+
+    const method = editTour ? "PATCH" : "POST";
+
+    const res = await fetch(url, {
+      method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        title: tour.title,
-    duration: `${tour.daysNum} Days / ${tour.nightsNum} Nights`,
-        price: tour.price,
-        region: tour.destination,
-        theme: tour.packageType,
-        image: tour.image || imagePreview, // use uploaded image preview if URL empty
-        description: tour.overview,
-        itinerary: tour.itinerary,
-      }),
+      body: JSON.stringify(payload),
     });
 
     if (!res.ok) throw new Error("Failed to save tour");
 
     const data = await res.json();
-    console.log("Tour saved:", data);
-    onSubmit(data); // pass data back if needed
-    onClose(); // close modal
+    onSubmit(data);
+    onClose();
   } catch (error) {
     console.error("Error submitting tour:", error);
   }
@@ -94,7 +139,9 @@ const handleSubmit = async (e) => {
 
         {/* HEADER */}
         <div className="flex justify-between items-center px-6 py-4 border-b flex-shrink-0">
-          <h2 className="text-xl font-bold text-blue-900">Upload Tour Package</h2>
+       <h2 className="text-xl font-bold text-blue-900">
+  {editTour ? "Update Tour Package" : "Upload Tour Package"}
+</h2>
           <button onClick={onClose}>
             <X />
           </button>
@@ -107,23 +154,41 @@ const handleSubmit = async (e) => {
           <div className="col-span-3 border-r p-6 flex flex-col items-center">
             <h3 className="font-semibold mb-3">Upload Image</h3>
             <div className="w-full aspect-[3/4] border-2 border-dashed rounded-xl flex items-center justify-center overflow-hidden">
-              {imagePreview ? (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <label className="text-gray-500 cursor-pointer text-center p-6">
-                  <p className="font-medium mb-2">Drag & Drop or Click to Upload</p>
-                  <input
-                    type="file"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                  />
-                </label>
-              )}
+             {imagePreview ? (
+  // ✅ Now clicking image opens file picker
+  <label className="w-full h-full cursor-pointer relative group">
+    
+    <img
+      src={imagePreview}
+      alt="Preview"
+      className="w-full h-full object-cover"
+    />
+
+    {/* Hover overlay */}
+    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+      <p className="text-white font-semibold text-sm">Click to Change</p>
+    </div>
+
+    <input
+      type="file"
+      className="hidden"
+      accept="image/*"
+      onChange={handleImageUpload}
+    />
+
+  </label>
+) : (
+  <label className="text-gray-500 cursor-pointer text-center p-6">
+    <p className="text-4xl mb-2">📷</p>
+    <p className="font-medium mb-2">Click to Upload</p>
+    <input
+      type="file"
+      className="hidden"
+      accept="image/*"
+      onChange={handleImageUpload}
+    />
+  </label>
+)}
             </div>
             <input
               className="mt-4 w-full border rounded-lg px-3 py-2"

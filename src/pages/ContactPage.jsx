@@ -66,8 +66,7 @@ const InfoSection = () => (
           </span>
         </div>
         <p className="font-serif text-xl sm:text-2xl md:text-3xl leading-relaxed text-white drop-shadow-md">
-          Pno C17 Paschim Vihar Kesopura, <br />
-          A Block Ajmer road Jaipur
+         P.No: C7, Jain Vihar, C Block, Ajmer road, Jaipur.
         </p>
       </div>
 
@@ -85,13 +84,24 @@ const InfoSection = () => (
             kirtiindianexcrusiontours@gmail.com
           </span>
         </div>
+          <div className="flex items-center gap-2 md:gap-4 group cursor-pointer">
+         <a
+             href="https://www.instagram.com/kirtiindianexcursiontours?igsh=czJzczVmdmU2dGk4&utm_source=qr"
+             target="_blank"
+             rel="noopener noreferrer"
+           >
+             <Instagram
+               size={20}
+               className="flex items-center gap-2 md:gap-4 group cursor-pointer"
+             />
+           </a>
+              <span className="text-sm md:text-base font-light tracking-wide text-white underline decoration-white/30 group-hover:decoration-white">
+            Instagram
+          </span>
+      </div>
       </div>
 
-      <div className="flex gap-4 md:gap-6 pt-4 border-t border-white/20 w-fit">
-        <Instagram strokeWidth={1} size={20} className="text-white/80 hover:text-white cursor-pointer transition-colors" />
-        <Facebook strokeWidth={1} size={20} className="text-white/80 hover:text-white cursor-pointer transition-colors" />
-        <Twitter strokeWidth={1} size={20} className="text-white/80 hover:text-white cursor-pointer transition-colors" />
-      </div>
+    
     </div>
   </section>
 );
@@ -138,16 +148,30 @@ const CheckoutForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      console.log('Form Submitted:', formData);
-      setIsSubmitting(false);
+
+    try {
+      const res = await fetch('https://kirti.bteam11.com/api/tours/content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, status: 'New' }) // automatically set status
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || 'Submission failed');
+
       setSubmitted(true);
-    }, 1500);
+    } catch (err) {
+      alert(err.message || 'Something went wrong');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -156,7 +180,9 @@ const CheckoutForm = () => {
         <div className="inline-block p-4 border border-[#FFD700] rounded-full mb-6">
           <Compass className="w-8 h-8 text-[#FFD700] animate-spin-slow" />
         </div>
-        <h3 className="font-serif text-3xl sm:text-4xl italic mb-4 text-[#FFD700]">Request Received</h3>
+        <h3 className="font-serif text-3xl sm:text-4xl italic mb-4 text-[#FFD700]">
+          Request Received
+        </h3>
         <p className="opacity-70 font-light max-w-md mx-auto leading-relaxed text-[#F5F5F5]">
           Thank you, {formData.fullName.split(' ')[0]}.<br />
           Our concierge team will review your details and contact you shortly regarding your itinerary.
@@ -214,6 +240,7 @@ const CheckoutForm = () => {
     </section>
   );
 };
+
 
 // ---------- Footer ----------
 const Footer = () => (

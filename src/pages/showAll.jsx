@@ -22,12 +22,25 @@ import tour21 from "../assets/bg2.jpeg";
 import tour22 from "../assets/bg3.jpeg";
 
 
+import t1 from "../assets/Gallery/t1.jpg"
+import t2 from "../assets/Gallery/t2.jpg"
+import t3 from "../assets/Gallery/t3.jpg"
+import t4 from "../assets/Gallery/t4.jpg"
+import t5 from "../assets/Gallery/t5.jpg"
+import t6 from "../assets/Gallery/t6.jpg"
+import t7 from "../assets/Jaipurfortblue.jpg"
+import t8 from "../assets/Jaipurfortcopy.jpg"
+import t9 from "../assets/bg10.jpg"
+import t10 from "../assets/Gallery/t8.jpg"
+import t11 from "../assets/Gallery/t9.jpg"
+import t12 from "../assets/Gallery/t10.jpg"
+
 const GALLERY_IMAGES = [
+  t1,t2,t3,t4,t7,t8,t9,t10,t11,t12,t6,t5,
   tour21,tour1, tour2, tour3, tour4, tour6,
   tour7, tour8, tour9, tour22, tour11, tour12,
-  tour13, tour14, tour20, tour16, tour17, tour18, tour19,tour15 ,tour10
-];
-
+  tour13, tour14, tour20, tour16, tour17, tour18, tour19,tour15 ,tour10,
+]
 const GalleryShowAll = () => {
   return (
     <section className="py-16 bg-white">

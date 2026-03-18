@@ -21,7 +21,7 @@ const App = () => {
   const [scrolled, setScrolled] = useState(false);
   const [selectedTour, setSelectedTour] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-  return localStorage.getItem('adminLoggedIn') === 'true';
+  return !!localStorage.getItem("token");
 });
   
   // Admin / Leads State
@@ -84,10 +84,17 @@ if (
   window.location.pathname === '/admin' ||
   window.location.pathname === '/admin/'
 ) {
-  return isLoggedIn 
-    ? <AdminPage leads={leads} tours={TOURS} /> 
-    : <AdminLogin onLogin={() => setIsLoggedIn(true)} />;
-}
+ return isLoggedIn 
+  ? (
+      <AdminPage
+        leads={leads}
+        tours={TOURS}
+          setLeads={setLeads} 
+        setIsLoggedIn={setIsLoggedIn}   // ✅ PASS IT
+      />
+    )
+  : <AdminLogin onLogin={() => setIsLoggedIn(true)} />;
+  }
 
   // Header Logic (Transparent on Home Top, Solid elsewhere)
   const isTransparentHeader = activePage === 'home' && !scrolled;
@@ -144,17 +151,40 @@ if (
 
 
 const AdminLogin = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simple hardcoded authentication
-    if (username === 'admin' && password === 'password') {
-      localStorage.setItem('adminLoggedIn', 'true'); // Save login state
+    setLoading(true);
+
+    try {
+      const res = await fetch("https://kirti.bteam11.com/api/tours/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      // ✅ Save token
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("adminLoggedIn", "true");
+
       onLogin();
-    } else {
-      alert('Invalid credentials');
+
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -162,13 +192,15 @@ const AdminLogin = ({ onLogin }) => {
     <div className="flex items-center justify-center min-h-screen">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-80">
         <h2 className="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+
         <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full mb-4 p-2 border rounded"
         />
+
         <input
           type="password"
           placeholder="Password"
@@ -176,8 +208,13 @@ const AdminLogin = ({ onLogin }) => {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full mb-4 p-2 border rounded"
         />
-        <button type="submit" className="w-full bg-blue-950 text-white py-2 rounded hover:bg-blue-900 transition">
-          Login
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-950 text-white py-2 rounded hover:bg-blue-900 transition"
+        >
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
